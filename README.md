@@ -1,10 +1,40 @@
-# Iso Combat (prototype v7)
+# Iso Combat (prototype v8)
 
 Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.8 MB), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v8: difficulty levels
+
+Pick **Lätt, Normal, Svår or Brutal** on the start screen, under the map select:
+↑ ↓ / W S on the keyboard, D-pad or left stick up/down on a gamepad (← → still changes the map), or click a card.
+Your choice is remembered (localStorage) and can be forced with `?diff=latt|normal|svar|brutal` (or `0`–`3`).
+The difficulty is shown in the HUD under the wave counter and on the game-over screen, and the
+high score is kept **per map and difficulty**.
+
+| | Lätt | Normal | Svår | Brutal |
+|---|---|---|---|---|
+| Hero HP | 150 | 100 | 100 | 100 |
+| Damage taken | ×0.6 | ×1 | ×1.2 (×1.25 from enemies) | ×1.5 (×1.6 from enemies) |
+| Enemy HP | ×0.75 | ×1 | ×1.25 | ×1.5 |
+| Enemies per wave / ramp | ×0.7 / ×0.65 | ×1 / ×1 | ×1.25 / ×1.25 | ×1.5 / ×1.5 |
+| Spawn interval | ×1.5 | ×1 | ×0.8 | ×0.6 |
+| Enemy speed | ×0.88 | ×1 | ×1.08 | ×1.18 |
+| Attack cooldown (aggression) | ×1.35 | ×1 | ×0.85 | ×0.7 |
+| Telegraph / wind-up time | ×1.45 | ×1 | ×0.85 | ×0.7 |
+| Ranged aim error (bows, MG, Kanonkocken) | ×2.4 | ×1 | ×0.6 | ×0.35 |
+| Korv (health) drops | ×2.2 | ×1 | ×0.6 | ×0.3 |
+| Ammo drops | ×1.7 | ×1 | ×0.75 | ×0.5 |
+| Heal on wave clear | +40 | +20 | +10 | 0 |
+| First boss (Rullstolskrigaren) | wave 7 | wave 5 | wave 4 | wave 3 |
+| Extra elite brutes per wave | – | – | +1 | +2 |
+| Aim assist cone | ×1.5 | ×1 | ×1 | ×0.85 |
+| Falling off / lava | rescued, −25 HP (lava −40) | death | death | death |
+
+Normal is exactly the v7 tuning. The difficulty is one data table (`src/difficulty.js`); the simulation only
+stores its id, so it is part of the serialized state and stays deterministic.
 
 ## What's new in v7: gamepad support
 
