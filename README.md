@@ -1,10 +1,30 @@
-# Iso Combat (prototype v6)
+# Iso Combat (prototype v7)
 
 Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.8 MB), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v7: gamepad support
+
+Plug in a gamepad (or connect one over Bluetooth) and press any button. A small toast says **"Handkontroll ansluten"**. The keyboard and mouse keep working, and the on-screen prompts follow whichever device you used last.
+Gamepads are read through the standard Gamepad API ("standard" mapping). Xbox, PlayStation (DualSense/DualShock) and Switch Pro controllers each get their own button labels.
+
+| Action | Xbox | PlayStation | Switch Pro |
+|---|---|---|---|
+| Move | Left stick | Left stick | Left stick |
+| Aim 360° (aim assist); push the stick all the way = fire | Right stick | Right stick | Right stick |
+| Fire | RT | R2 | ZR |
+| Jump (hold for a higher jump) | A | ✕ | B |
+| Dodge roll | B | ○ | A |
+| Kick | X | □ | Y |
+| Previous / next weapon | LB / RB, D-pad ← → | L1 / R1, D-pad ← → | L / R, D-pad ← → |
+| Pause | Menu | Options | + |
+| Map select | Stick/D-pad to browse, A to start | Stick/D-pad, ✕ | Stick/D-pad, B |
+| Back (pause → resume, game over → menu) | B | ○ | A |
+
+The controller rumbles on your shots, on explosions nearby and when you are hit, where the browser supports it.
 
 ## What's new in v6
 
