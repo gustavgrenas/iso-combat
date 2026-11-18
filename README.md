@@ -1,10 +1,41 @@
-# Iso Combat (prototype v5)
+# Iso Combat (prototype v6)
 
-Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.7 MB), and works offline.
+Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.8 MB), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v6
+
+- **Map select** at the start: a card with a live thumbnail for every map (arrow keys / A-D to browse, Enter/Space or a click to start). The last map you picked is remembered.
+- **Roomier maps**: every island has about 1.5x the area, with open arenas to fight in.
+- **Four new enemies**:
+  - **Rullstolskrigaren** (boss): an armoured wheelchair with a machine gun on the armrest. He drifts, rams you and fires MG bursts.
+  - **Bikungen**: a beekeeper who releases a bee swarm. The flamethrower burns the bees.
+  - **Kanonkocken**: lobs soup pots. A marker shows where each one lands, and it leaves a slippery, scalding soup puddle.
+  - **Gravgrävaren**: digs down and moves as a mound. He bursts up under you and leaves an open grave behind.
+- **Interactive elements** (one reusable system):
+  - lifts and moving platforms
+  - levers
+  - conveyors and a log flume
+  - bounce and launch pads
+  - the big saw, a lava sluice, a log trap, eruptions, and collapsing timber stacks
+- **Interactives on the older maps**: Gläntön, Tallholmen, Ruinskäret, Klyftan and Krutkällan each get a lift up onto a plateau, plus a ring-out conveyor with a lever that reverses it.
+- **New map: Vulkanön**
+  - Lava kills instantly, enemies included. Lava rivers pour off the island's edge.
+  - Eruptions throw rocks, with a landing marker for each.
+  - A lift up to the crater rim.
+  - A lever that opens a lava sluice right under the enemies.
+  - Pads on basalt pillars, floating platforms out to the islets, and plank bridges that break.
+- **New map: Sågverket**
+  - The big saw is deadly; a lever turns it on and off.
+  - A feed belt runs into the saw, and the yard belt has a lever that reverses it.
+  - A log flume carries logs to the river.
+  - Up in the loft, a lever sends rolling logs down.
+  - Timber stacks collapse into rolling logs when you blow them up.
+  - A log hoist, a water wheel, the river and its bridges, and a hay pad that launches you up the watchtower.
+- New kill tags for the hazards (lava, saw, logs, eruption).
 
 ## What's new in v5
 - **Jump:** Space now jumps, and the dodge roll moved to **C** (or Ctrl). The jump is quick: a fast rise, a short hang and a quick fall, with a little air control. Holding Space gives a full jump of about 1.3 m, which clears a 1 m ledge or a 1.5 m gap. A tap gives a short hop. A shadow under the hero shows where you will land. Falling off the edge still kills. The jump state is part of the sim state and is saved in snapshots.
