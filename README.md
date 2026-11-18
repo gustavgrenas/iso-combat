@@ -1,10 +1,47 @@
-# Iso Combat (prototype v8)
+# Iso Combat (prototype v9)
 
-Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.8 MB), and works offline.
+Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 2.3 MB, most of it embedded sound samples), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v9: real sound, health packs, auto-aim, distinct maps
+
+### Sound
+- The procedural synth sounds are replaced by **recorded and designed samples** (91 sounds, ~220 variations, all **CC0 / public domain**, see *Credits* below):
+  weapons, flesh/bone/wood/stone impacts, gore, near and far explosions, footsteps on grass/stone/wood, jump/land, dodge, kick,
+  fall scream, splash, lava, every enemy type (grunts, hurt and death yells, sheep, bees, chainsaw, wheelchair motor…), pickups and UI.
+- Samples are mono Ogg Opus (40 kbps) embedded in `index.html` as base64 and decoded asynchronously after the page loads (~1–2 s, the title screen works meanwhile).
+  If a sound fails to decode (e.g. Safari older than 18.4 / macOS 15.4 cannot decode Ogg Opus), that sound falls back to the old procedural synth.
+- Mixer: random variation + pitch/volume per shot, distance attenuation, stereo pan and low-pass for far sounds, separate far-explosion samples,
+  voice limiting (max 30 voices, per-sound caps and priority stealing), small sounds duck under explosions, a reverb send,
+  bus compressor and a master limiter with a soft safety clipper (stress test: peak −3 dBFS, 0 clipped samples).
+- Every map has its own **ambient sound bed** (birds, night insects, rain, winter wind, autumn wind, sea, lava, sawmill).
+- **Volume sliders** (Master / Effekter) in the pause menu, saved in the browser. Gamepad in pause: D-pad ←→ master, LB/RB effects.
+
+### Gameplay
+- **Progress HUD**: a small bar under the wave counter shows enemies left in the current wave and how many waves until the next boss.
+- **Health packs (Förbandslåda)**: appear periodically on safe open ground (never at the edge, in water or on hazards), with a green glow and a sound;
+  they heal 35 % of max HP and vanish after 32 s (blinking for the last 4). About every 14 s on Lätt, 24 s on Normal, 34 s on Svår and 50 s on Brutal; at most 2 at a time.
+- **Auto-aim toggle** ("Sikthjälp: På/Av") in the pause menu (gamepad: Y), saved in the browser. When on, aim softly bends toward the nearest *visible*
+  enemy in a cone: strongest on gamepad, normal on keyboard and light on mouse (mouse only snaps when the cursor is already near the target).
+
+### Maps
+Each map now has its own time of day / weather, palette, lighting, sky colour, weather particles, ambient sound and enemy mix, and the generated islands have different shapes:
+
+| Map | Mood | Weather | Shape | Enemy mix |
+|---|---|---|---|---|
+| Gläntön | summer day | pollen | round | standard |
+| Tallholmen | dusk | fireflies | crescent | more archers |
+| Ruinskäret | rain | rain | oval | more brutes |
+| Klyftan | winter | snow | long spine | more runners and bombers |
+| Krutkällan | autumn evening | falling leaves | six-armed star | many bombers |
+| Ölandsgården | high summer | – | (hand-built) | standard |
+| Vulkanön | eruption | ash | (hand-built) | standard |
+| Sågverket | morning haze | sawdust | (hand-built) | standard |
+
+Note: Normal is no longer identical to v7/v8 in waves on the four maps with a custom enemy mix, and health packs exist on all difficulties.
 
 ## What's new in v8: difficulty levels
 
@@ -197,6 +234,133 @@ Mouse aiming is available as an option: **"Styrning: Tangentbord / Mus"** in the
   - Flame particles are capped at 420.
   - Pixel ratio is capped at 2, with a 2048 shadow map.
   - Shaders are pre-compiled at start.
+
+## Credits (sound)
+
+All sound samples are released under **CC0 1.0 (public domain dedication)** — free to use and redistribute, no attribution required; credited here anyway with thanks.
+Clips were cut, levelled, trimmed and re-encoded to Opus. Freesound clips come from the public high-quality previews of CC0 sounds; each licence was checked on the sound's page.
+
+**Kenney** (www.kenney.nl, CC0 1.0):
+- Digital Audio — https://kenney.nl/assets/digital-audio — CC0 1.0
+- Impact Sounds — https://kenney.nl/assets/impact-sounds — CC0 1.0
+- Interface Sounds — https://kenney.nl/assets/interface-sounds — CC0 1.0
+- RPG Audio — https://kenney.nl/assets/rpg-audio — CC0 1.0
+- Sci-fi Sounds — https://kenney.nl/assets/sci-fi-sounds — CC0 1.0
+
+**Freesound** (freesound.org, CC0 1.0):
+- "Flamethrower" by 1bob — https://freesound.org/people/1bob/sounds/831929/ — CC0 1.0
+- "Basic Metal Clang Free" by AardsReal — https://freesound.org/people/AardsReal/sounds/842171/ — CC0 1.0
+- "Rocks.wav" by adamgryu — https://freesound.org/people/adamgryu/sounds/336023/ — CC0 1.0
+- "war horn.wav" by adharca — https://freesound.org/people/adharca/sounds/539956/ — CC0 1.0
+- "Young Male Scream" by annatabernero — https://freesound.org/people/annatabernero/sounds/219654/ — CC0 1.0
+- "Grunt 3" by aulix24 — https://freesound.org/people/aulix24/sounds/795468/ — CC0 1.0
+- "Water Poured onto a Burning Fireplace – Hissing Steam and Sizzling Embers" by bassimat — https://freesound.org/people/bassimat/sounds/870180/ — CC0 1.0
+- "MaleDeathSound12.wav" by Blankened — https://freesound.org/people/Blankened/sounds/577033/ — CC0 1.0
+- "Man Screams His Death Into The Void" by BlockFrog — https://freesound.org/people/BlockFrog/sounds/752055/ — CC0 1.0
+- "Denim_And_Cloth_Step_Foley_16" by BlondPanda — https://freesound.org/people/BlondPanda/sounds/778518/ — CC0 1.0
+- "Spark.wav" by BMacZero — https://freesound.org/people/BMacZero/sounds/94132/ — CC0 1.0
+- "Bone Crunch Fast.wav" by BrassKnucklesFilms — https://freesound.org/people/BrassKnucklesFilms/sounds/192146/ — CC0 1.0
+- "Blast + Flamethrower cooldown" by Breviceps — https://freesound.org/people/Breviceps/sounds/447941/ — CC0 1.0
+- "ugh (male)" by brookmorgan — https://freesound.org/people/brookmorgan/sounds/189565/ — CC0 1.0
+- "Birds In Light Rain Ambience (Scotland)" by BurghRecords — https://freesound.org/people/BurghRecords/sounds/530898/ — CC0 1.0
+- "Break off wood stick 4" by CAT-FOX_ALEX — https://freesound.org/people/CAT-FOX_ALEX/sounds/875588/ — CC0 1.0
+- "Little Whoosh 2" by ch_ase — https://freesound.org/people/ch_ase/sounds/423799/ — CC0 1.0
+- "R02-24-Airplane Tire Skid.wav" by craigsmith — https://freesound.org/people/craigsmith/sounds/479498/ — CC0 1.0
+- "Clean fast Swoosh.aiff" by Danjocross — https://freesound.org/people/Danjocross/sounds/507466/ — CC0 1.0
+- "Distant Explosion" by danlucaz — https://freesound.org/people/danlucaz/sounds/517747/ — CC0 1.0
+- "Crickets At Night - Raw sound" by Defelozedd94 — https://freesound.org/people/Defelozedd94/sounds/522299/ — CC0 1.0
+- "Ocean Waves" by derjuli — https://freesound.org/people/derjuli/sounds/693388/ — CC0 1.0
+- "Agressive Bees" by dlp_coasters — https://freesound.org/people/dlp_coasters/sounds/462867/ — CC0 1.0
+- "Crossbow Fire XI" by DUDE_X-SoundLab — https://freesound.org/people/DUDE_X-SoundLab/sounds/752211/ — CC0 1.0
+- "Squish.ogg" by egomassive — https://freesound.org/people/egomassive/sounds/536765/ — CC0 1.0
+- "Bow Release Hit" by EminYILDIRIM — https://freesound.org/people/EminYILDIRIM/sounds/536068/ — CC0 1.0
+- "sheep 1" by esperar — https://freesound.org/people/esperar/sounds/171152/ — CC0 1.0
+- "sheep 2.mp3" by esperar — https://freesound.org/people/esperar/sounds/171151/ — CC0 1.0
+- "sheep 3.mp3" by esperar — https://freesound.org/people/esperar/sounds/171149/ — CC0 1.0
+- "Digging in wet course sand (1)" by f3bbbo — https://freesound.org/people/f3bbbo/sounds/651292/ — CC0 1.0
+- "Death Scream" by Feed_ — https://freesound.org/people/Feed_/sounds/523216/ — CC0 1.0
+- "Lava Loop 2" by Fission9 — https://freesound.org/people/Fission9/sounds/474850/ — CC0 1.0
+- "Crossbow Firing" by GameWithBepis — https://freesound.org/people/GameWithBepis/sounds/561475/ — CC0 1.0
+- "Cutting down a tree, falling to the ground.wav" by hadescolossus — https://freesound.org/people/hadescolossus/sounds/704670/ — CC0 1.0
+- "explosion2.wav" by IdkMrGarcia — https://freesound.org/people/IdkMrGarcia/sounds/446624/ — CC0 1.0
+- "tree fall" by igroglaz — https://freesound.org/people/igroglaz/sounds/593875/ — CC0 1.0
+- "Fire_Crackle_01.wav" by IPaddeh — https://freesound.org/people/IPaddeh/sounds/422851/ — CC0 1.0
+- "Munch 9.wav" by JarredGibb — https://freesound.org/people/JarredGibb/sounds/217342/ — CC0 1.0
+- "shoveling-dirt" by JeffPearson — https://freesound.org/people/JeffPearson/sounds/849840/ — CC0 1.0
+- "Swing Woosh" by Jofae — https://freesound.org/people/Jofae/sounds/389590/ — CC0 1.0
+- "human male scream 5" by JohnsonBrandEditing — https://freesound.org/people/JohnsonBrandEditing/sounds/243382/ — CC0 1.0
+- "Electric Train Motor Idle - Loop (Queensland Rail InterCity Express).wav" by JotrainG — https://freesound.org/people/JotrainG/sounds/700034/ — CC0 1.0
+- "Enemy hurt 1" by K27K_Mike — https://freesound.org/people/K27K_Mike/sounds/853659/ — CC0 1.0
+- "Male Disgusted" by kanyonwyvern — https://freesound.org/people/kanyonwyvern/sounds/740303/ — CC0 1.0
+- "Stone Crumble 2" by Kastenfrosch — https://freesound.org/people/Kastenfrosch/sounds/521956/ — CC0 1.0
+- "Barrel Break 4.wav" by kevinkace — https://freesound.org/people/kevinkace/sounds/66772/ — CC0 1.0
+- "Crate Break 4.wav" by kevinkace — https://freesound.org/people/kevinkace/sounds/66780/ — CC0 1.0
+- "spark2.ogg" by Kneeling — https://freesound.org/people/Kneeling/sounds/643861/ — CC0 1.0
+- "factory ambience industrial pump room hum with PA announcement heavy echo and pump turn on start.flac" by kyles — https://freesound.org/people/kyles/sounds/637521/ — CC0 1.0
+- "Wood_Log_Scrape_Roll_Concrete_02" by LamaMakesMusic — https://freesound.org/people/LamaMakesMusic/sounds/828614/ — CC0 1.0
+- "tire_skid_02" by loganzsound — https://freesound.org/people/loganzsound/sounds/774265/ — CC0 1.0
+- "splash 1b" by Logicogonist — https://freesound.org/people/Logicogonist/sounds/807962/ — CC0 1.0
+- "Chainsaw Cutting.wav" by lonemonk — https://freesound.org/people/lonemonk/sounds/185579/ — CC0 1.0
+- "Basic Fire whoosh" by LookIMadeAThing — https://freesound.org/people/LookIMadeAThing/sounds/260554/ — CC0 1.0
+- "Basic Fire Whoosh 2" by LookIMadeAThing — https://freesound.org/people/LookIMadeAThing/sounds/260555/ — CC0 1.0
+- "squelch watermelon" by MaddieCooper — https://freesound.org/people/MaddieCooper/sounds/739184/ — CC0 1.0
+- "Boing 2" by magnuswaker — https://freesound.org/people/magnuswaker/sounds/540790/ — CC0 1.0
+- "minigun_Overheat.wav" by Marregheriti — https://freesound.org/people/Marregheriti/sounds/266102/ — CC0 1.0
+- "classic double swwosh .wav" by martian — https://freesound.org/people/martian/sounds/19312/ — CC0 1.0
+- "Shovel Gong 170504_1500.wav" by megashroom — https://freesound.org/people/megashroom/sounds/391492/ — CC0 1.0
+- "Distant Explosion" by Mr_KeybOred — https://freesound.org/people/Mr_KeybOred/sounds/372086/ — CC0 1.0
+- "Voice_AdultMale_PainGrunts_09.wav" by MrFossy — https://freesound.org/people/MrFossy/sounds/547209/ — CC0 1.0
+- "circula_mono_4824.wav" by Mystikuum — https://freesound.org/people/Mystikuum/sounds/400867/ — CC0 1.0
+- "Wet Splat 1.mp3" by nebulasnails — https://freesound.org/people/nebulasnails/sounds/495118/ — CC0 1.0
+- "Cartoon Wow Scream Voice" by NicknameLarry — https://freesound.org/people/NicknameLarry/sounds/508898/ — CC0 1.0
+- "Swinging staff whoosh (strong) 04.wav" by Nightflame — https://freesound.org/people/Nightflame/sounds/422513/ — CC0 1.0
+- "Grunt" by nomiqbomi — https://freesound.org/people/nomiqbomi/sounds/578788/ — CC0 1.0
+- "verydistantexplosion.wav" by Opticreep — https://freesound.org/people/Opticreep/sounds/255527/ — CC0 1.0
+- "Headshot.wav" by Pablobd — https://freesound.org/people/Pablobd/sounds/511194/ — CC0 1.0
+- "Bow Drawn" by Paveroux — https://freesound.org/people/Paveroux/sounds/490556/ — CC0 1.0
+- "Pain 2" by Peter_Scream — https://freesound.org/people/Peter_Scream/sounds/720758/ — CC0 1.0
+- "Machine Gun 001 - single shot.ogg" by pgi — https://freesound.org/people/pgi/sounds/212601/ — CC0 1.0
+- "Machine Gun 002 - single shot.ogg" by pgi — https://freesound.org/people/pgi/sounds/212607/ — CC0 1.0
+- "swoosh.wav" by PorkMuncher — https://freesound.org/people/PorkMuncher/sounds/263595/ — CC0 1.0
+- "squelch_3" by QuantumFellow — https://freesound.org/people/QuantumFellow/sounds/734836/ — CC0 1.0
+- "axe hits - 1.wav" by quatricise — https://freesound.org/people/quatricise/sounds/582372/ — CC0 1.0
+- "Cannon Shot" by qubodup — https://freesound.org/people/qubodup/sounds/187767/ — CC0 1.0
+- "Collision" by qubodup — https://freesound.org/people/qubodup/sounds/332058/ — CC0 1.0
+- "Waboba Moon Ball Water Splash 5" by qubodup — https://freesound.org/people/qubodup/sounds/867460/ — CC0 1.0
+- "Boom with Rumble" by Qvantor — https://freesound.org/people/Qvantor/sounds/879263/ — CC0 1.0
+- "earth rumble.wav" by Reitanna — https://freesound.org/people/Reitanna/sounds/217657/ — CC0 1.0
+- "Short Scream" by riippumattog — https://freesound.org/people/riippumattog/sounds/788867/ — CC0 1.0
+- "Splash-eau-goudron1.wav" by rombart — https://freesound.org/people/rombart/sounds/186748/ — CC0 1.0
+- "Sharp Explosion 4 (of 5)" by Rudmer_Rotteveel — https://freesound.org/people/Rudmer_Rotteveel/sounds/336011/ — CC0 1.0
+- "Displeasure - Urgh why" by Sadiquecat — https://freesound.org/people/Sadiquecat/sounds/801096/ — CC0 1.0
+- "Longbow Release 2.wav" by saturdaysoundguy — https://freesound.org/people/saturdaysoundguy/sounds/394179/ — CC0 1.0
+- "cartoon-sound-single-boing" by sdroliasnick — https://freesound.org/people/sdroliasnick/sounds/731262/ — CC0 1.0
+- "Tom-esque Scream 1.mp3" by se2001 — https://freesound.org/people/se2001/sounds/464361/ — CC0 1.0
+- "FUSE.wav" by Seidolon — https://freesound.org/people/Seidolon/sounds/372186/ — CC0 1.0
+- "An automatic rifle being shot once // punchy sounding" by serøutōnin--deprivəd — https://freesound.org/people/ser%C3%B8ut%C5%8Dnin--depriv%C9%99d/sounds/855654/ — CC0 1.0
+- "Crossbow Shot.wav" by spookymodem — https://freesound.org/people/spookymodem/sounds/249810/ — CC0 1.0
+- "sqeeeek_sheep.wav" by sqeeeek — https://freesound.org/people/sqeeeek/sounds/237103/ — CC0 1.0
+- "Match Sizzle 02" by squareal — https://freesound.org/people/squareal/sounds/237407/ — CC0 1.0
+- "Chainsaw - Pull to Start and Run.wav" by Stefan021 — https://freesound.org/people/Stefan021/sounds/431742/ — CC0 1.0
+- "Autumn wind and dry leaves.wav" by Stek59 — https://freesound.org/people/Stek59/sounds/457318/ — CC0 1.0
+- "ATM INT Wind Howl Cold Winter 09 (stereo).wav" by Takkyi — https://freesound.org/people/Takkyi/sounds/546871/ — CC0 1.0
+- "BeesShortBurst.wav" by taylordonj — https://freesound.org/people/taylordonj/sounds/521364/ — CC0 1.0
+- "Quake Short.wav" by TheMinkman — https://freesound.org/people/TheMinkman/sounds/199803/ — CC0 1.0
+- "Simple Sizzle .m4a" by thomashill1 — https://freesound.org/people/thomashill1/sounds/478800/ — CC0 1.0
+- "Grunt1 - Death Pain.wav" by tonsil5 — https://freesound.org/people/tonsil5/sounds/416839/ — CC0 1.0
+- "Grunt2 - Death Pain.wav" by tonsil5 — https://freesound.org/people/tonsil5/sounds/416838/ — CC0 1.0
+- "Arrow Impact" by Twisted_Euphoria — https://freesound.org/people/Twisted_Euphoria/sounds/205938/ — CC0 1.0
+- "Forest Ambience with Birds" by upkey — https://freesound.org/people/upkey/sounds/826326/ — CC0 1.0
+- "large explosion 1" by V-ktor — https://freesound.org/people/V-ktor/sounds/482993/ — CC0 1.0
+- "water_splash_10shots.wav" by vibe_crc — https://freesound.org/people/vibe_crc/sounds/50623/ — CC0 1.0
+- "bone break_5.wav" by Vinni_R — https://freesound.org/people/Vinni_R/sounds/630594/ — CC0 1.0
+- "Bone Breaking" by wackoME — https://freesound.org/people/wackoME/sounds/413430/ — CC0 1.0
+- "Grunt1.wav" by whisperbandnumber1 — https://freesound.org/people/whisperbandnumber1/sounds/397276/ — CC0 1.0
+- "Steam/hiss" by wubitog — https://freesound.org/people/wubitog/sounds/234782/ — CC0 1.0
+- "Fast whoosh, bamboo swoosh through air, version 2" by zapsplat.com — https://freesound.org/people/zapsplat.com/sounds/719637/ — CC0 1.0
+- "Jumppad" by zivs — https://freesound.org/people/zivs/sounds/725734/ — CC0 1.0
+
+Game code, models and procedural graphics: © the author. Engine: three.js (MIT). Font: Bungee (SIL Open Font License 1.1).
 
 ## Source
 This public repo contains only the built game (`index.html`) and this README. The source (`src/`) and the headless test scripts live in the private working folder and are not published here.
