@@ -1,10 +1,61 @@
-# Iso Combat (prototype v4)
+# Iso Combat (prototype v5)
 
-Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.67 MB), and works offline.
+Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.7 MB), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v5
+- **Jump:** Space now jumps, and the dodge roll moved to **C** (or Ctrl). The jump is quick: a fast rise, a short hang and a quick fall, with a little air control. Holding Space gives a full jump of about 1.3 m, which clears a 1 m ledge or a 1.5 m gap. A tap gives a short hop. A shadow under the hero shows where you will land. Falling off the edge still kills. The jump state is part of the sim state and is saved in snapshots.
+- **More varied maps:** six maps now rotate between runs (pick one with `?map=0…5`). Each has its own hazard, shown when the run starts:
+  - **Gläntön:** powder kegs and a rope bridge.
+  - **Tallholmen:** dense forest and jump pads.
+  - **Ruinskäret:** ruin floors that crack and fall away.
+  - **Klyftan (new):** chasms with fragile bridges.
+  - **Krutkällan (new):** powder kegs everywhere.
+  - **Ölandsgården (new):** an Öland farmyard with a sea all around (see below).
+  - New features on the maps:
+    - Chasms with plank bridges. Brutes and explosions can break the bridges.
+    - Raised mesas that you can only reach by jumping. They hold bonus pickups.
+    - Jump pads that throw you to a set spot.
+    - Floors that crumble under your weight.
+    - Powder kegs that you can shoot, set on fire or hit. They explode in chains.
+    - Enemies come from several changing spawn zones, marked with a brief red ring.
+    - Runners jump up ledges and across gaps after you. Stuck brutes smash through cover.
+- **Ölandsgården:** an arena on Öland:
+  - A white main house and a falu-red barn with an all-red garage door and a white loft window.
+  - A pool house with a deck, and a pool you can fall into.
+  - A stone-walled terrace, an in-ground **trampoline** that bounces you high, and an apple tree.
+  - An open lawn, and a gravel drive.
+  - Alvar limestone, dry-stone walls, junipers, a windmill with turning sails, and raukar along the shore.
+  - The sea all around.
+  - Buildings are cover and can be destroyed.
+  - Walls between the camera and the hero are dithered away around the hero.
+- **Organic low-poly world instead of cubes:**
+  - Ruins, pillars, walls, boulders and raukar are built from hewn stones that are chamfered, have jittered corners and overlap their neighbours.
+  - Plaster and board walls are seamless.
+  - Roofs are real sloped gables.
+  - Crates are 1 m plank crates with battens and braces.
+  - Coastlines and terrace edges are rounded: the staircase corners are cut or filled.
+  - Cliff faces bulge with depth, and the underside of each island is smooth and faceted.
+  - Ledges, islets and limestone slabs are irregular shapes.
+  - Destruction throws faceted stone shards and long wood splinters. Gore chunks are irregular too.
+  - Everything is still instanced or merged, and debris is pooled.
+- **Small death texts:** kill and death lines are now small tags that float above the body. A compact kill feed sits in the top-right corner. Wave banners are smaller and shorter.
+- **New sound:** everything is still procedural WebAudio:
+  - Sounds are layered: a transient, a tonal body, a noise tail and distortion.
+  - Pitch and level vary on every shot, and sounds are panned in stereo by their screen position.
+  - The chainsaw has an engine sound that idles and revs.
+  - The minigun has a barrel whine that follows the spin-up and spin-down.
+  - The flamethrower roars.
+  - New sounds: footsteps, jump and landing, pad whoosh, trampoline boing, splashes, cracking floors and stone rubble.
+  - A voice cap, a glue compressor, a soft clipper and a limiter keep the mix clean.
+- **Tests:** `tests/v5_features.mjs` checks:
+  - The jump: apex, short hop, air time, landing on a 1 m ledge, crossing a 1.5 m gap, and snapshot/restore mid-air.
+  - Pads, the trampoline, keg chains and crumbling floors.
+  - Bot runs on all six maps.
+  - The v4 tests (muzzle, weapons, input, now with Space for jump and C/Ctrl for dodge) and sim determinism also pass.
 
 ## What's new in v4
 - **Organic floating island:** a noise-generated outline with peninsulas, bays, narrow bridges and detached ledges instead of a square grid. It has raised terraces with ramps, blended grass, dirt and stone, sandy layered cliffs with small ledges, a stepped underside, and small floating islets. The palette is brighter, with a cyan sky.
@@ -45,7 +96,8 @@ https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` i
 | WASD | Run (screen-relative) |
 | Arrow keys | Aim **and** attack in that direction while held (8 directions; two arrows = diagonal). Soft aim assist bends toward the nearest enemy within ~25°. Hold for the flamethrower, minigun and chainsaw. |
 | Shift | Kick (knock enemies off the edge) |
-| Space | Dodge roll (also puts out fire on you) |
+| Space | Jump (hold for full height: up ledges and across gaps) |
+| C / Ctrl | Dodge roll (also puts out fire on you) |
 | Q/E or 1–7 | Switch weapon: Yxa · Armborst · Bomb · Fårkanon · Eldkastare · Minigun · Motorsåg |
 | Esc / P · M | Pause · sound |
 
