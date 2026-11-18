@@ -1,10 +1,33 @@
-# Iso Combat (prototype v3)
+# Iso Combat (prototype v4)
 
-Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.63 MB), and works offline.
+Brutal and silly real-time isometric arena combat. It is one self-contained file, `index.html` (about 0.67 MB), and works offline.
 It is built from `src/` with `npm run build` (esbuild bundles three.js r170 together with the embedded Bungee font).
 
 ## Play
 https://gustavgrenas.github.io/iso-combat/ — works offline too: `index.html` is the whole game.
+
+## What's new in v4
+- **Organic floating island:** a noise-generated outline with peninsulas, bays, narrow bridges and detached ledges instead of a square grid. It has raised terraces with ramps, blended grass, dirt and stone, sandy layered cliffs with small ledges, a stepped underside, and small floating islets. The palette is brighter, with a cyan sky.
+- **Three maps** rotate between runs: Gläntön, Tallholmen and Ruinskäret. You can pick one with `?map=0|1|2`.
+- **Pine forests:**
+  - Pines are cover: they block bolts, bullets and movement.
+  - They burn: the Eldkastare sets them alight, fire spreads and they burn down to charred stumps.
+  - They can be felled: the chainsaw, axe or a brute's club fells them, and a falling pine crushes enemies.
+  - Trees between the camera and the hero turn see-through.
+- **Ruins and pillars:** sandstone ruins with vines.
+- Pathfinding and edge falls follow the new terrain heights.
+- **Muzzle-accurate shots:** every projectile, flame and tracer now leaves the real muzzle of the weapon the hero is holding, in every aim direction and while running. The sim and renderer share one weapon rig, and the arms are IK'd onto the weapon grips.
+- **New characters:**
+  - **Hero:** face, beard, helmet, armour and a cape on a spring. Every weapon is held properly in both hands.
+  - **Springkåpa:** hooded runner with a dagger.
+  - **Bjässe:** brute with a club and a belly.
+  - **Bågkåpa:** archer with a bow and a quiver.
+  - **Bombkåpa (new):** throws fused bombs.
+- Characters have expressive yelling faces (when hurt, burning, falling or firing) and better animation. A gold ring marks the hero and red rings mark enemies, so teams are easy to tell apart.
+- **Tests:**
+  - A muzzle test checks 5 rigged weapons × 8 directions × standing/running, plus the archer. The worst error is 0.0005 units.
+  - The weapon/tree tests pass on all three maps.
+  - The input/UI tests, sim determinism and smoke tests also pass.
 
 ## What's new in v3
 - **Look:** smooth stylised low-poly characters (rounded/bevelled shapes, rim light) instead of pure voxels. Characters have procedural animation: run cycle with lean, attack anticipation and follow-through, dodge roll, hit reactions and squash-and-stretch.
